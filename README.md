@@ -44,7 +44,7 @@ it is set as 0.5 (i.e., $\nu = 2$).
 
 Example:
 ```r
-estimate_nu_profilefunction(y, x, omega_init = 1/2)
+estimate_nu_profile(y, x, omega_init = 1/2)
 ```
 
 We also provide a function to conduct estimations on all 5 approaches all at once.
