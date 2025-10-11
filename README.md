@@ -16,12 +16,13 @@ frequentist and bayesian methods, including:
 - Marginalized Fisher
 
 ## Functions
+
 ### Simulate data
 Generate synthetic data from a linear regression model where the error terms
 follow a Student's t-distribution with a specified degrees of freedom.
 
 Example:
-````r
+```r
 simulate_t_error_data(n = 300, p = 1, beta = rep(0,1), sigma = 1, nu = 2, seed = NULL)
 ```
 
