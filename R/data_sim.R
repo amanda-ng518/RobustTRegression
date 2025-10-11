@@ -1,3 +1,7 @@
+# ============================================================
+# Data Simulation
+# ============================================================
+
 #' Simulate Linear Regression Data with t-Distributed Errors
 #'
 #' Generate synthetic data from a linear regression model where the error terms
