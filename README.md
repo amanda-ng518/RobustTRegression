@@ -20,4 +20,4 @@ if (!requireNamespace("remotes", quietly = TRUE)) {
 }
 
 # Install RobustTRegression from GitHub
-remotes::install_github("your-github-username/RobustTRegression")
+remotes::install_github("amanda-ng518/RobustTRegression")
