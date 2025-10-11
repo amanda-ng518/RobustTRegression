@@ -1,33 +1,41 @@
-#' Run all \eqn{\nu} estimation methods on a single simulated dataset
+#' Run All \eqn{\nu} Estimation Methods on a Single Simulated Dataset
 #'
 #' @description
-#' This function applies five different approaches for estimating the
-#' degrees of freedom parameter \eqn{\nu} in a Student-t regression model
-#' to a single simulated dataset. Each approach represents a distinct
-#' estimation strategy based on profile likelihood, adjusted profile
-#' likelihood, integrated Jeffreys priors, marginalized priors, or
-#' joint block updates of \eqn{\nu}.
+#' Applies five different methods for estimating the degrees of freedom parameter
+#' \eqn{\nu} in a Student-\emph{t} regression model to a single simulated dataset.
+#' Each method represents a distinct estimation strategy based on:
 #'
-#' The function provides a unified interface to compare these estimation
-#' methods under the same data-generating conditions.
+#' \itemize{
+#'   \item Profile likelihood
+#'   \item Adjusted profile likelihood
+#'   \item Independent Jeffrey's
+#'   \item Marginalized independent Jeffrey's
+#'   \item Marginalized Fisher
+#' }
 #'
-#' @param y Numeric response vector.
-#' @param x Numeric design matrix (including an intercept column).
-#' @param omega_init Starting value for \code{omega} optimization.
-#'   \eqn{\omega = 1 / \nu}.If simulated t-error data is used, use true 1/\eqn{\nu} for quicker convergence.
+#' This function provides a unified interface to compare these approaches
+#' under identical data-generating conditions.
 #'
-#' @return A named list containing the results from all five estimation approaches:
+#' @param y Numeric vector. The response variable.
+#' @param x Numeric matrix. The design matrix (must include an intercept column).
+#' @param omega_init Numeric. Initial value for \eqn{\omega = 1 / \nu}.
+#'   If using simulated data, setting this to the true value of \eqn{1 / \nu}
+#'   can improve convergence.
+#'
+#' @return A named list containing the results from all five estimation methods:
 #' \describe{
 #'   \item{profile}{Result from the profile likelihood estimation.}
 #'   \item{adj_profile}{Result from the adjusted profile likelihood approach.}
-#'   \item{IJ}{Result from the independence Jeffrey's prior method.}
-#'   \item{mar_IJ}{Result from the marginalized independence Jeffrey's prior method.}
-#'   \item{nu_block}{Result from the marginalized Fisher approach for \eqn{\nu}.}
+#'   \item{IJ}{Result from the independent Jeffrey's approach.}
+#'   \item{mar_IJ}{Result from the marginalized independent Jeffrey's approach.}
+#'   \item{nu_block}{Result from the marginalized Fisher approach.}
 #' }
 #'
 #' @seealso
-#' \code{\link{estimate_nu_profile}}, \code{\link{estimate_nu_adj_profile}},
-#' \code{\link{estimate_nu_IJ}}, \code{\link{estimate_nu_mar_IJ}},
+#' \code{\link{estimate_nu_profile}},
+#' \code{\link{estimate_nu_adj_profile}},
+#' \code{\link{estimate_nu_IJ}},
+#' \code{\link{estimate_nu_mar_IJ}},
 #' \code{\link{estimate_nu_nu_block}}
 #'
 #' @export
