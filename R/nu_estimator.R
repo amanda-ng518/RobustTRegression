@@ -28,7 +28,7 @@ optimize_omega <- function(omega_init, target_fn) {
   list(omega = out$par, convergence = out$convergence, value = out$value)
 }
 
-#' Profile Log-Likelihood Estimator (\eqn{\omega} = 1/\nu)
+#' Profile Log-Likelihood Estimator (\eqn{\omega} = 1/ \nu)
 #'
 #' Computes the profile log-likelihood estimator for the degrees of freedom
 #' parameter \eqn{\nu} via optimization over \eqn{\omega = 1 / \nu}.
