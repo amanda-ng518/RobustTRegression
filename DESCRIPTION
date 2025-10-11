@@ -1,4 +1,4 @@
-Package: RobustT
+Package: RobustTRegression
 Type: Package
 Title: Estimation of Degrees of Freedom and Regression Parameters using Robust t-Regression methods
 Version: 0.0.0.9000
