@@ -2,7 +2,7 @@
 % Please edit documentation in R/nu_estimator.R
 \name{estimate_nu_profile}
 \alias{estimate_nu_profile}
-\title{Profile Log-Likelihood Estimator (\eqn{\omega} = 1/ \nu)}
+\title{Profile Log-Likelihood Estimator (\eqn{\omega = 1/ \nu})}
 \usage{
 estimate_nu_profile(y, x, omega_init = 1/2)
 }
