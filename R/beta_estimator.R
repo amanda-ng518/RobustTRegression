@@ -18,7 +18,7 @@
 #' @param method Character or numeric. Specifies the estimation method:
 #'   one of \code{"OLS"}, \code{"Huber"}, \code{"profile"}, \code{"adj_profile"},
 #'   \code{"IJ"}, \code{"Marginalized IJ"}, \code{"Marginalized Fisher"},
-#'   or a non-negative integer (interpreted as a fixed \code{nu}).
+#'   or a positive integer (interpreted as a fixed \code{nu}).
 #' @param omega_init Numeric. Initial value for the \code{omega = 1/nu} parameter (default is 0.5).
 #' @param beta_init Optional numeric vector. Initial values for \code{beta}.
 #'   If not specified, ordinary least squares (OLS) estimates are used as defaults.
@@ -104,7 +104,7 @@ estimate_beta <- function(y, x,
   } else {
     # 3b. Fixed nu
     if (suppressWarnings(!is.na(as.numeric(method))) &&
-               as.numeric(method) >= 0) {
+               as.numeric(method) > 0) {
       nu_hat <- as.numeric(method)
       omega_hat <- ifelse(nu_hat == 0, Inf, 1 / nu_hat)
     } else {
