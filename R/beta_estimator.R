@@ -1,40 +1,43 @@
-# ============================================================
-# Beta estimation function
-# ============================================================
-#' Estimate regression coefficients beta under various methods
+#' Estimate Regression Coefficients \eqn{\beta} Using Various Methods
 #'
-#' This function estimates regression coefficients (\eqn{\beta}) and scale (\eqn{\sigma})
-#' using one of the following approaches:
-#' - Ordinary least squares ("OLS")
-#' - Huber regression ("Huber")
-#' - Fixed degrees of freedom t-regression (method = non-negative integer)
-#' - Estimated degrees of freedom using one of five methods:
-#'   "Profile", "Adj profile", "IJ", "Marginalized IJ", or "Marginalized Fisher"
+#' This function estimates regression coefficients (\eqn{\beta}) and the scale
+#' parameter (\eqn{\sigma}) using one of several estimation approaches:
+#'
+#' \itemize{
+#'   \item Ordinary Least Squares: \code{"OLS"}
+#'   \item Huber Regression (robust): \code{"Huber"}
+#'   \item Fixed degrees of freedom Student-\emph{t} regression: a non-negative integer \code{nu}
+#'   \item Estimated degrees of freedom using one of the following:
+#'     \code{"profile"}, \code{"adj_profile"}, \code{"IJ"}, \code{"Marginalized IJ"}, \code{"Marginalized Fisher"}
+#' }
+#'
+#' Internally, this function dispatches to the appropriate estimation routine based on the specified method.
+#'
+#' @param y Numeric vector. The response variable.
+#' @param x Numeric matrix. The design matrix (must include an intercept column).
+#' @param method Character or numeric. Specifies the estimation method:
+#'   one of \code{"OLS"}, \code{"Huber"}, \code{"profile"}, \code{"adj_profile"},
+#'   \code{"IJ"}, \code{"Marginalized IJ"}, \code{"Marginalized Fisher"},
+#'   or a non-negative integer (interpreted as a fixed \code{nu}).
+#' @param omega_init Numeric. Initial value for the \code{omega = 1/nu} parameter (default is 0.5).
+#' @param beta_init Optional numeric vector. Initial values for \code{beta}.
+#'   If not specified, ordinary least squares (OLS) estimates are used as defaults.
+#' @param sigma_init Optional numeric value. Initial value for \code{sigma}.
+#'   If not specified, the residual standard deviation from OLS is used as the default.
+#' @param control Optional list of control parameters passed to \code{\link[stats]{optim}}.
+#'
+#' @return A list with the following components:
+#' \describe{
+#'   \item{method}{Character. The estimation method used.}
+#'   \item{nu_hat}{Estimated or fixed degrees of freedom \eqn{\nu}. \code{NA} for OLS and Huber.}
+#'   \item{omega_hat}{Estimated or fixed value of \eqn{\omega = 1/\nu}. \code{NA} for OLS and Huber.}
+#'   \item{beta_hat}{Estimated regression coefficients.}
+#'   \item{sigma_hat}{Estimated scale parameter (residual standard deviation).}
+#'   \item{success_nu}{Convergence code for \eqn{\nu} estimation. \code{0} indicates successful convergence; \code{NA} for OLS, Huber, and fixed \code{nu}.}
+#'   \item{success_beta}{Convergence code for \code{beta}/\code{sigma} optimization. \code{0} indicates success; \code{NA} for OLS and Huber.}
+#' }
 #'
 #' @importFrom MASS rlm psi.huber
-#'
-#' @param y Response vector
-#' @param x Design matrix (including intercept)
-#' @param method Character or numeric; one of:
-#'   "OLS", "Huber", "profile", "adj_profile", "IJ", "Marginalized IJ", "Marginalized Fisher",
-#'   or a non-negative integer for fixed nu approach.
-#' @param omega_init Initial value for omega (default = 0.5)
-#' @param beta_init Optional initial beta values
-#' @param sigma_init Optional initial sigma
-#' @param control List of control parameters for optim
-#'
-#' @return A list with components:
-#' \describe{
-#'   \item{method}{The method used}
-#'   \item{nu_hat}{Estimated or fixed degrees of freedom (NA for OLS/Huber)}
-#'   \item{omega_hat}{Transformed 1/nu parameter (NA for OLS/Huber)}
-#'   \item{beta_hat}{Estimated coefficients}
-#'   \item{sigma_hat}{Estimated sigma (residual SD)}
-#'   \item{success_nu}{Convergence code for nu estimation. A value of
-#'     0 indicates successful convergence. (NA for fixed nu/OLS/Huber)}
-#'   \item{success_beta}{Convergence code for beta optimization. A value of
-#'     0 indicates successful convergence. (NA for OLS/Huber)}
-#' }
 #' @export
 estimate_beta <- function(y, x,
                           method = c("OLS", "Huber", "Profile", "Adj profile", "IJ",
