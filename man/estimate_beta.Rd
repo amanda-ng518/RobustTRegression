@@ -23,7 +23,7 @@ estimate_beta(
 \item{method}{Character or numeric. Specifies the estimation method:
 one of \code{"OLS"}, \code{"Huber"}, \code{"profile"}, \code{"adj_profile"},
 \code{"IJ"}, \code{"Marginalized IJ"}, \code{"Marginalized Fisher"},
-or a non-negative integer (interpreted as a fixed \code{nu}).}
+or a positive integer (interpreted as a fixed \code{nu}).}
 
 \item{omega_init}{Numeric. Initial value for the \code{omega = 1/nu} parameter (default is 0.5).}
 
