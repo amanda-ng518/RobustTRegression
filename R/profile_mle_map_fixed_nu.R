@@ -1,25 +1,25 @@
-#' Profile MLE of Sigma and Beta for Fixed Degrees of Freedom
+#' Profile MLE of \code{sigma} and \code{beta} for Fixed Degrees of Freedom
 #'
 #' This internal helper function computes the profile maximum likelihood estimates (MLEs)
-#' of the regression coefficients (`beta`) and scale parameter (`sigma`) for a fixed
-#' degrees of freedom (`nu`) under a Student-t error model.
-#' It returns the estimated parameters along with the corresponding negative log-likelihood value
-#' evaluated at these estimates.
+#' of the regression coefficients (\code{beta}) and the scale parameter (\code{sigma})
+#' for a fixed degrees of freedom \code{nu} under a Student-\emph{t} error model.
 #'
-#' @param nu The fixed degrees of freedom for the t-distribution.
-#' @param y The response variable.
-#' @param x The design matrix including the intercept term.
+#' It returns the estimated parameters along with the corresponding negative log-likelihood
+#' value evaluated at those estimates.
+#'
+#' @param nu Numeric. The fixed degrees of freedom for the t-distribution.
+#' @param y Numeric vector. The response variable.
+#' @param x Numeric matrix. The design matrix (must include an intercept column).
 #'
 #' @return A list containing:
 #' \describe{
-#'   \item{beta_hat}{Profile MLE of `beta`.}
-#'   \item{sigma_hat}{Profile MLE of `sigma`.}
+#'   \item{beta_hat}{Profile MLE of \code{beta}.}
+#'   \item{sigma_hat}{Profile MLE of \code{sigma}.}
 #'   \item{loglik}{Negative log-likelihood value evaluated at the fitted parameters.}
-#'   \item{convergence}{Convergence code (0 indicates success).}
+#'   \item{convergence}{Convergence code returned by the optimizer (0 indicates successful convergence).}
 #' }
 #'
 #' @keywords internal
-#'
 fit_profile_mle_fixed_nu <- function(y, x, nu = Inf, par_init = NULL, control = list()) {
   n <- length(y)
   p <- ncol(x)
@@ -44,39 +44,36 @@ fit_profile_mle_fixed_nu <- function(y, x, nu = Inf, par_init = NULL, control = 
   list(beta = par_hat[1:p], sigma = abs(par_hat[p+1]), loglik = -opt$value, convergence = opt$convergence)
 }
 
-#' Profile MAP estimates of Sigma and Beta for Fixed Degrees of Freedom
+#' Profile MAP Estimates of \code{sigma} and \code{beta} for Fixed Degrees of Freedom
 #'
-#' This function computes the MAP estimates
-#' of regression coefficients (`beta`) and scale parameter (`sigma`) for a fixed
-#' degrees of freedom value `nu` in a Student-t regression model.
-#' The optimization is performed over the log-likelihood combined with a log-sigma
-#' prior (i.e. log inverse prior) and log-beta prior (i.e. log(1) = 0) .
+#' This function computes the maximum a posteriori (MAP) estimates of the regression
+#' coefficients (\code{beta}) and the scale parameter (\code{sigma}) for a fixed
+#' value of the degrees of freedom parameter \code{nu} in a Student-\emph{t} regression model.
 #'
-#' This function serves as the first-stage optimization step in estimating the full
-#' joint model parameters that include the prior on `nu` (i.e., log-likelihood +
-#' log-sigma prior + log-beta prior + log-nu prior).
-#'
-#' @param nu The fixed degrees of freedom for the t-distribution.
-#' @param y The response variable.
-#' @param x The design matrix including the intercept term.
-#'
-#' @return A list containing:
-#' \describe{
-#'   \item{beta_hat}{Profile MLE of `beta`.}
-#'   \item{sigma_hat}{Profile MLE of `sigma`.}
-#'   \item{loglik}{Negative log-likelihood value evaluated at the fitted parameters.}
+#' The optimization is performed over the log-posterior, which includes:
+#' \itemize{
+#'   \item The log-likelihood under a Student-\emph{t} error model,
+#'   \item An improper prior on \code{sigma} proportional to \eqn{1/\sigma} (i.e., \eqn{-\log(\sigma)}),
+#'   \item A flat prior on \code{beta} (i.e., constant log-density).
 #' }
 #'
+#' This function is used as the first-stage optimization step in
+#' estimating the full joint posterior over all model parameters, including \code{nu},
+#' where the full objective includes an additional prior on \code{nu}.
+#'
+#' @param nu Numeric. Fixed degrees of freedom for the t-distribution.
+#' @param y Numeric vector. The response variable.
+#' @param x Numeric matrix. The design matrix (must include an intercept column).
+#'
 #' @return A list containing:
 #' \describe{
-#'   \item{beta_hat}{Estimated regression coefficients.}
-#'   \item{sigma_hat}{Estimated scale parameter.}
-#'   \item{loglik}{Maximized joint density (excluding `nu` prior).}
-#'   \item{convergence}{Convergence code from \code{\link[stats]{optim}} (0 indicates success).}
+#'   \item{beta_hat}{MAP estimate of the regression coefficients.}
+#'   \item{sigma_hat}{MAP estimate of the scale parameter.}
+#'   \item{loglik}{Value of the log-posterior objective (excluding the \code{nu} prior) evaluated at the estimates.}
+#'   \item{convergence}{Convergence code from \code{\link[stats]{optim}}. A value of 0 indicates successful convergence.}
 #' }
 #'
 #' @keywords internal
-#'
 fit_profile_map_fixed_nu <- function(y, x, nu, par_init = NULL, control = list(maxit = 10000)) {
   n <- length(y)
   p <- ncol(x)
