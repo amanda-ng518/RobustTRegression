@@ -47,7 +47,7 @@ The model is defined as:
 }
 \examples{
 set.seed(123)
-data <- simulate_t_errors(n = 100, p = 3, beta = c(1, 0.5, -0.3), sigma = 1, nu = 3)
+data <- simulate_t_error_data(n = 100, p = 3, beta = c(1, 0.5, -0.3), sigma = 1, nu = 3)
 str(data)
 
 }
