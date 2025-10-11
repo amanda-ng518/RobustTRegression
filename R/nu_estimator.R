@@ -5,8 +5,8 @@
 #' Optimize \eqn{\omega} parameters for a given target function
 #'
 #' This function performs numerical optimization over the
-#' omega parameter vector using the BFGS algorithm. It is primarily designed
-#' for minimizing an omega-based objective function within the package's internal
+#' \eqn{\omega} parameter vector using the BFGS algorithm. It is primarily designed
+#' for minimizing a \eqn{\omega}-based objective function within the function's
 #' estimation routines.
 #'
 #' @param omega_init Numeric vector of initial values for the \eqn{\omega} parameters.
@@ -18,7 +18,7 @@
 #'   \item{omega}{The optimized \eqn{\omega} parameter vector.}
 #'   \item{convergence}{Convergence code returned by \code{optim}. A value of
 #'     0 indicates successful convergence.}
-#'   \item{value}{The final value of the objective function at the optimum.}
+#'   \item{value}{he objective function value at the optimum.}
 #' }
 #'
 #' @keywords internal
@@ -28,15 +28,24 @@ optimize_omega <- function(omega_init, target_fn) {
   list(omega = out$par, convergence = out$convergence, value = out$value)
 }
 
-#' Profile log-likelihood estimator (\eqn{\omega} = 1/\eqn{\nu})
+#' Profile Log-Likelihood Estimator (\eqn{\omega} = 1/\nu)
 #'
-#' @param y Numeric response vector.
-#' @param x Numeric design matrix (including an intercept column).
-#' @param omega_init Starting value for \code{omega} optimization.
-#'   \eqn{\omega = 1 / \nu}.If simulated t-error data is used,
-#'   use true 1/\eqn{\nu} for quicker convergence.
+#' Computes the profile log-likelihood estimator for the degrees of freedom
+#' parameter \eqn{\nu} via optimization over \eqn{\omega = 1 / \nu}.
 #'
-#' @return list with optimized \eqn{\omega}, optimized \eqn{\nu} and convergence status
+#' @param y Numeric vector. The response variable.
+#' @param x Numeric matrix. The design matrix (should include an intercept column).
+#' @param omega_init Numeric. Initial value for \eqn{\omega = 1 / \nu}.
+#'   If simulated t-error data is used, setting this to the true value of \eqn{1/\nu}
+#'   can improve convergence speed.
+#'
+#' @return A list with the following components:
+#' \describe{
+#'   \item{omega}{The optimized value of \eqn{\omega}.}
+#'   \item{nu}{The corresponding value of \eqn{\nu = 1 / \omega}.}
+#'   \item{convergence}{An integer convergence code from \code{\link[stats]{optim}}.
+#'     A value of 0 indicates successful convergence.}
+#' }
 #' @export
 estimate_nu_profile <- function(y, x, omega_init = 1/2) {
   n <- length(y)
@@ -60,13 +69,22 @@ estimate_nu_profile <- function(y, x, omega_init = 1/2) {
 
 #' Adjusted-profile estimator (uses adjustment term based on observed j matrix)
 #'
-#' @param y Numeric response vector.
-#' @param x Numeric design matrix (including an intercept column).
-#' @param omega_init Starting value for \code{omega} optimization.
-#'   \eqn{\omega = 1 / \nu}.If simulated t-error data is used,
-#'   use true 1/\eqn{\nu} for quicker convergence.
+#' Computes the adjusted profile log-likelihood estimator for the degrees of freedom
+#' parameter \eqn{\nu} via optimization over \eqn{\omega = 1 / \nu}.
 #'
-#' @return list with optimized \eqn{\omega}, optimized \eqn{\nu} and convergence status
+#' @param y Numeric vector. The response variable.
+#' @param x Numeric matrix. The design matrix (should include an intercept column).
+#' @param omega_init Numeric. Initial value for \eqn{\omega = 1 / \nu}.
+#'   If simulated t-error data is used, setting this to the true value of \eqn{1/\nu}
+#'   can improve convergence speed.
+#'
+#' @return A list with the following components:
+#' \describe{
+#'   \item{omega}{The optimized value of \eqn{\omega}.}
+#'   \item{nu}{The corresponding value of \eqn{\nu = 1 / \omega}.}
+#'   \item{convergence}{An integer convergence code from \code{\link[stats]{optim}}.
+#'     A value of 0 indicates successful convergence.}
+#' }
 #' @export
 estimate_nu_adj_profile <- function(y, x, omega_init = 1/2) {
   n <- length(y); p <- ncol(x)
@@ -112,15 +130,24 @@ estimate_nu_adj_profile <- function(y, x, omega_init = 1/2) {
        convergence = out$convergence, value = out$value)
 }
 
-#' Independent Jeffreys estimator
+#' Independent Jeffrey's estimator
 #'
-#' @param y Numeric response vector.
-#' @param x Numeric design matrix (including an intercept column).
-#' @param omega_init Starting value for \code{omega} optimization.
-#'   \eqn{\omega = 1 / \nu}.If simulated t-error data is used,
-#'   use true 1/\eqn{\nu} for quicker convergence.
+#' Computes the Independent Jeffrey's approach estimator for the degrees of freedom
+#' parameter \eqn{\nu} via optimization over \eqn{\omega = 1 / \nu}.
 #'
-#' @return list with optimized \eqn{\omega}, optimized \eqn{\nu} and convergence status
+#' @param y Numeric vector. The response variable.
+#' @param x Numeric matrix. The design matrix (should include an intercept column).
+#' @param omega_init Numeric. Initial value for \eqn{\omega = 1 / \nu}.
+#'   If simulated t-error data is used, setting this to the true value of \eqn{1/\nu}
+#'   can improve convergence speed.
+#'
+#' @return A list with the following components:
+#' \describe{
+#'   \item{omega}{The optimized value of \eqn{\omega}.}
+#'   \item{nu}{The corresponding value of \eqn{\nu = 1 / \omega}.}
+#'   \item{convergence}{An integer convergence code from \code{\link[stats]{optim}}.
+#'     A value of 0 indicates successful convergence.}
+#' }
 #' @export
 estimate_nu_IJ <- function(y, x, omega_init = 1/2) {
   n <- length(y)
@@ -145,15 +172,24 @@ estimate_nu_IJ <- function(y, x, omega_init = 1/2) {
        convergence = out$convergence, value = out$value)
 }
 
-#' Marginal Independent Jeffreys
+#' Marginal Independent Jeffrey's
 #'
-#' @param y Numeric response vector.
-#' @param x Numeric design matrix (including an intercept column).
-#' @param omega_init Starting value for \code{omega} optimization.
-#'   \eqn{\omega = 1 / \nu}.If simulated t-error data is used,
-#'   use true 1/\eqn{\nu} for quicker convergence.
+#' Computes the Marginalized Independent Jeffrey's estimator for the degrees of freedom
+#' parameter \eqn{\nu} via optimization over \eqn{\omega = 1 / \nu}.
 #'
-#' @return list with optimized \eqn{\omega}, optimized \eqn{\nu} and convergence status
+#' @param y Numeric vector. The response variable.
+#' @param x Numeric matrix. The design matrix (should include an intercept column).
+#' @param omega_init Numeric. Initial value for \eqn{\omega = 1 / \nu}.
+#'   If simulated t-error data is used, setting this to the true value of \eqn{1/\nu}
+#'   can improve convergence speed.
+#'
+#' @return A list with the following components:
+#' \describe{
+#'   \item{omega}{The optimized value of \eqn{\omega}.}
+#'   \item{nu}{The corresponding value of \eqn{\nu = 1 / \omega}.}
+#'   \item{convergence}{An integer convergence code from \code{\link[stats]{optim}}.
+#'     A value of 0 indicates successful convergence.}
+#' }
 #' @export
 estimate_nu_mar_IJ <- function(y, x, omega_init = 1/2) {
   n <- length(y)
@@ -180,13 +216,22 @@ estimate_nu_mar_IJ <- function(y, x, omega_init = 1/2) {
 
 #' Marginal Fisher estimator
 #'
-#' @param y Numeric response vector.
-#' @param x Numeric design matrix (including an intercept column).
-#' @param omega_init Starting value for \code{omega} optimization.
-#'   \eqn{\omega = 1 / \nu}.If simulated t-error data is used,
-#'   use true 1/\eqn{\nu} for quicker convergence.
+#' Computes the Marginalized Fisher estimator for the degrees of freedom
+#' parameter \eqn{\nu} via optimization over \eqn{\omega = 1 / \nu}.
 #'
-#' @return list with optimized \eqn{\omega}, optimized \eqn{\nu} and convergence status
+#' @param y Numeric vector. The response variable.
+#' @param x Numeric matrix. The design matrix (should include an intercept column).
+#' @param omega_init Numeric. Initial value for \eqn{\omega = 1 / \nu}.
+#'   If simulated t-error data is used, setting this to the true value of \eqn{1/\nu}
+#'   can improve convergence speed.
+#'
+#' @return A list with the following components:
+#' \describe{
+#'   \item{omega}{The optimized value of \eqn{\omega}.}
+#'   \item{nu}{The corresponding value of \eqn{\nu = 1 / \omega}.}
+#'   \item{convergence}{An integer convergence code from \code{\link[stats]{optim}}.
+#'     A value of 0 indicates successful convergence.}
+#' }
 #' @export
 estimate_nu_nu_block <- function(y, x, omega_init = 1/2) {
   n <- length(y)
