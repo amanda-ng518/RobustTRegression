@@ -43,7 +43,7 @@ specify the initial value in $\omega$ scale for BFGS optimization. By default,
 it is set as 0.5 (i.e., $\nu = 2$).
 
 Example:
-````r
+```r
 estimate_nu_profilefunction(y, x, omega_init = 1/2)
 ```
 
@@ -51,7 +51,7 @@ We also provide a function to conduct estimations on all 5 approaches all at onc
 Users need to specify the initial value in $\omega$ scale for BFGS optimization.
 
 Example:
-````r
+```r
 run_all_estimators(y, x, omega_init = 1/2)
 ```
 
@@ -78,7 +78,7 @@ prodcue $\beta$ estimators directly:
 - Huber
 
 Example:
-````r
+```r
 estimate_beta(y, x, method = "Profile", omega_init = 0.5)
 ```
 
