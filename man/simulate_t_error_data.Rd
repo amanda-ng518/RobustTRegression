@@ -14,40 +14,40 @@ simulate_t_error_data(
 )
 }
 \arguments{
-\item{n}{Number of observations to simulate. Default is 300.}
+\item{n}{Integer. Number of observations to simulate. Default is 300.}
 
-\item{p}{Number of predictors (including intercept). Default is 1.}
+\item{p}{Integer. Number of predictors (including the intercept). Default is 1.}
 
 \item{beta}{Numeric vector of regression coefficients of length \code{p}.
 The first element corresponds to the intercept.}
 
-\item{sigma}{Scale parameter for the t-distributed errors. Default is 1.}
+\item{sigma}{Numeric. Scale parameter for the t-distributed errors. Default is 1.}
 
-\item{nu}{Degrees of freedom for the t errors. Default is 2.}
+\item{nu}{Numeric. Degrees of freedom for the t-distribution. Default is 2.}
 
-\item{seed}{Optional seed}
+\item{seed}{Optional integer. Random seed for reproducibility.}
 }
 \value{
 A list with the following components:
 \describe{
 \item{y}{A numeric vector of simulated response values.}
-\item{x}{A numeric matrix of predictors (including intercept) from standard normal.}
+\item{x}{A numeric matrix of predictor values (including intercept),
+drawn from a standard normal distribution.}
 }
 }
 \description{
-This function generates synthetic data from a linear regression model
-where the error terms follow a Student-t distribution with specified
-degrees of freedom. It is useful for studying the performance of robust
-regression methods under heavy-tailed or outlier-prone error distributions.
+Generate synthetic data from a linear regression model where the error terms
+follow a Student's t-distribution with a specified degrees of freedom.
+This is useful for studying the performance of robust regression methods
+under heavy-tailed or outlier-prone error distributions.
+}
+\details{
 The model is defined as:
 \deqn{y_i = x_i^\top \beta + \varepsilon_i, \quad \varepsilon_i \sim t_\nu(0, \sigma^2)}
 }
 \examples{
-# Simulate data with heavy-tailed errors
-sim <- simulate_t_error_data(
-  n = 300, p = 2, beta = c(1, 2), sigma = 1, nu = 3, seed = 123
-)
-head(sim$x)
-head(sim$y)
+set.seed(123)
+data <- simulate_t_errors(n = 100, p = 3, beta = c(1, 0.5, -0.3), sigma = 1, nu = 3)
+str(data)
 
 }

@@ -18,13 +18,13 @@ A list containing:
 \item{omega}{The optimized \eqn{\omega} parameter vector.}
 \item{convergence}{Convergence code returned by \code{optim}. A value of
 0 indicates successful convergence.}
-\item{value}{The final value of the objective function at the optimum.}
+\item{value}{he objective function value at the optimum.}
 }
 }
 \description{
 This function performs numerical optimization over the
-omega parameter vector using the BFGS algorithm. It is primarily designed
-for minimizing an omega-based objective function within the package's internal
+\eqn{\omega} parameter vector using the BFGS algorithm. It is primarily designed
+for minimizing a \eqn{\omega}-based objective function within the function's
 estimation routines.
 }
 \keyword{internal}

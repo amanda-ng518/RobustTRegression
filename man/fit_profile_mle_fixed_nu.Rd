@@ -2,16 +2,16 @@
 % Please edit documentation in R/profile_mle_map_fixed_nu.R
 \name{fit_profile_mle_fixed_nu}
 \alias{fit_profile_mle_fixed_nu}
-\title{Profile MLE of Sigma and Beta for Fixed Degrees of Freedom}
+\title{Profile MLE of \code{sigma} and \code{beta} for Fixed Degrees of Freedom}
 \usage{
 fit_profile_mle_fixed_nu(y, x, nu = Inf, par_init = NULL, control = list())
 }
 \arguments{
-\item{y}{The response variable.}
+\item{y}{Numeric vector. The response variable.}
 
-\item{x}{The design matrix including the intercept term.}
+\item{x}{Numeric matrix. The design matrix (must include an intercept column).}
 
-\item{nu}{The fixed degrees of freedom for the t-distribution.}
+\item{nu}{Numeric. The fixed degrees of freedom for the t-distribution.}
 }
 \value{
 A list containing:
@@ -19,14 +19,16 @@ A list containing:
 \item{beta_hat}{Profile MLE of \code{beta}.}
 \item{sigma_hat}{Profile MLE of \code{sigma}.}
 \item{loglik}{Negative log-likelihood value evaluated at the fitted parameters.}
-\item{convergence}{Convergence code (0 indicates success).}
+\item{convergence}{Convergence code returned by the optimizer (0 indicates successful convergence).}
 }
 }
 \description{
 This internal helper function computes the profile maximum likelihood estimates (MLEs)
-of the regression coefficients (\code{beta}) and scale parameter (\code{sigma}) for a fixed
-degrees of freedom (\code{nu}) under a Student-t error model.
-It returns the estimated parameters along with the corresponding negative log-likelihood value
-evaluated at these estimates.
+of the regression coefficients (\code{beta}) and the scale parameter (\code{sigma})
+for a fixed degrees of freedom \code{nu} under a Student-\emph{t} error model.
+}
+\details{
+It returns the estimated parameters along with the corresponding negative log-likelihood
+value evaluated at those estimates.
 }
 \keyword{internal}

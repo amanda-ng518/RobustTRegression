@@ -2,22 +2,29 @@
 % Please edit documentation in R/nu_estimator.R
 \name{estimate_nu_profile}
 \alias{estimate_nu_profile}
-\title{Profile log-likelihood estimator (\eqn{\omega} = 1/\eqn{\nu})}
+\title{Profile Log-Likelihood Estimator (\eqn{\omega} = 1/\nu)}
 \usage{
 estimate_nu_profile(y, x, omega_init = 1/2)
 }
 \arguments{
-\item{y}{Numeric response vector.}
+\item{y}{Numeric vector. The response variable.}
 
-\item{x}{Numeric design matrix (including an intercept column).}
+\item{x}{Numeric matrix. The design matrix (should include an intercept column).}
 
-\item{omega_init}{Starting value for \code{omega} optimization.
-\eqn{\omega = 1 / \nu}.If simulated t-error data is used,
-use true 1/\eqn{\nu} for quicker convergence.}
+\item{omega_init}{Numeric. Initial value for \eqn{\omega = 1 / \nu}.
+If simulated t-error data is used, setting this to the true value of \eqn{1/\nu}
+can improve convergence speed.}
 }
 \value{
-list with optimized \eqn{\omega}, optimized \eqn{\nu} and convergence status
+A list with the following components:
+\describe{
+\item{omega}{The optimized value of \eqn{\omega}.}
+\item{nu}{The corresponding value of \eqn{\nu = 1 / \omega}.}
+\item{convergence}{An integer convergence code from \code{\link[stats]{optim}}.
+A value of 0 indicates successful convergence.}
+}
 }
 \description{
-Profile log-likelihood estimator (\eqn{\omega} = 1/\eqn{\nu})
+Computes the profile log-likelihood estimator for the degrees of freedom
+parameter \eqn{\nu} via optimization over \eqn{\omega = 1 / \nu}.
 }

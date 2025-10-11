@@ -2,7 +2,7 @@
 % Please edit documentation in R/profile_mle_map_fixed_nu.R
 \name{fit_profile_map_fixed_nu}
 \alias{fit_profile_map_fixed_nu}
-\title{Profile MAP estimates of Sigma and Beta for Fixed Degrees of Freedom}
+\title{Profile MAP Estimates of \code{sigma} and \code{beta} for Fixed Degrees of Freedom}
 \usage{
 fit_profile_map_fixed_nu(
   y,
@@ -13,38 +13,36 @@ fit_profile_map_fixed_nu(
 )
 }
 \arguments{
-\item{y}{The response variable.}
+\item{y}{Numeric vector. The response variable.}
 
-\item{x}{The design matrix including the intercept term.}
+\item{x}{Numeric matrix. The design matrix (must include an intercept column).}
 
-\item{nu}{The fixed degrees of freedom for the t-distribution.}
+\item{nu}{Numeric. Fixed degrees of freedom for the t-distribution.}
 }
 \value{
 A list containing:
 \describe{
-\item{beta_hat}{Profile MLE of \code{beta}.}
-\item{sigma_hat}{Profile MLE of \code{sigma}.}
-\item{loglik}{Negative log-likelihood value evaluated at the fitted parameters.}
-}
-
-A list containing:
-\describe{
-\item{beta_hat}{Estimated regression coefficients.}
-\item{sigma_hat}{Estimated scale parameter.}
-\item{loglik}{Maximized joint density (excluding \code{nu} prior).}
-\item{convergence}{Convergence code from \code{\link[stats]{optim}} (0 indicates success).}
+\item{beta_hat}{MAP estimate of the regression coefficients.}
+\item{sigma_hat}{MAP estimate of the scale parameter.}
+\item{loglik}{Value of the log-posterior objective (excluding the \code{nu} prior) evaluated at the estimates.}
+\item{convergence}{Convergence code from \code{\link[stats]{optim}}. A value of 0 indicates successful convergence.}
 }
 }
 \description{
-This function computes the MAP estimates
-of regression coefficients (\code{beta}) and scale parameter (\code{sigma}) for a fixed
-degrees of freedom value \code{nu} in a Student-t regression model.
-The optimization is performed over the log-likelihood combined with a log-sigma
-prior (i.e. log inverse prior) and log-beta prior (i.e. log(1) = 0) .
+This function computes the maximum a posteriori (MAP) estimates of the regression
+coefficients (\code{beta}) and the scale parameter (\code{sigma}) for a fixed
+value of the degrees of freedom parameter \code{nu} in a Student-\emph{t} regression model.
 }
 \details{
-This function serves as the first-stage optimization step in estimating the full
-joint model parameters that include the prior on \code{nu} (i.e., log-likelihood +
-log-sigma prior + log-beta prior + log-nu prior).
+The optimization is performed over the log-posterior, which includes:
+\itemize{
+\item The log-likelihood under a Student-\emph{t} error model,
+\item An improper prior on \code{sigma} proportional to \eqn{1/\sigma} (i.e., \eqn{-\log(\sigma)}),
+\item A flat prior on \code{beta} (i.e., constant log-density).
+}
+
+This function is used as the first-stage optimization step in
+estimating the full joint posterior over all model parameters, including \code{nu},
+where the full objective includes an additional prior on \code{nu}.
 }
 \keyword{internal}
