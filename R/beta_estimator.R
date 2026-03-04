@@ -8,7 +8,7 @@
 #'   \item Huber Regression (robust): \code{"Huber"}
 #'   \item Fixed degrees of freedom Student-\emph{t} regression: a non-negative integer \code{nu}
 #'   \item Estimated degrees of freedom using one of the following:
-#'     \code{"profile"}, \code{"adj_profile"}, \code{"IJ"}, \code{"Marginalized IJ"}, \code{"Marginalized Fisher"}
+#'     \code{"Profile"}, \code{"Adj profile"}, \code{"Full Bayes"}, \code{"Pseudo Bayes"}
 #' }
 #'
 #' Internally, this function dispatches to the appropriate estimation routine based on the specified method.
@@ -16,8 +16,8 @@
 #' @param y Numeric vector. The response variable.
 #' @param x Numeric matrix. The design matrix (must include an intercept column).
 #' @param method Character or numeric. Specifies the estimation method:
-#'   one of \code{"OLS"}, \code{"Huber"}, \code{"profile"}, \code{"adj_profile"},
-#'   \code{"IJ"}, \code{"Marginalized IJ"}, \code{"Marginalized Fisher"},
+#'   one of \code{"OLS"}, \code{"Huber"}, \code{"Profile"}, \code{"Adj profile"},
+#'   \code{"Full Bayes"}, \code{"Pseudo Bayes"},
 #'   or a positive integer (interpreted as a fixed \code{nu}).
 #' @param omega_init Numeric. Initial value for the \code{omega = 1/nu} parameter (default is 0.5).
 #' @param beta_init Optional numeric vector. Initial values for \code{beta}.
@@ -40,8 +40,8 @@
 #' @importFrom MASS rlm psi.huber
 #' @export
 estimate_beta <- function(y, x,
-                          method = c("OLS", "Huber", "Profile", "Adj profile", "IJ",
-                                     "Marginalized IJ", "Marginalized Fisher"),
+                          method = c("OLS", "Huber", "Profile", "Adj profile", "Full Bayes",
+                                     "Pseudo Bayes"),
                           omega_init = 0.5,
                           beta_init = NULL,
                           sigma_init = NULL,
@@ -87,16 +87,15 @@ estimate_beta <- function(y, x,
   # ---- CASE 3: Fixed nu or nu-estimation method ----
 
   if (is.numeric(method)) method <- as.character(method)
-  valid_methods <- c("Profile", "Adj profile", "IJ", "Marginalized IJ", "Marginalized Fisher")
+  valid_methods <- c("Profile", "Adj profile", "Full Bayes", "Pseudo Bayes")
 
   # 3a. Estimate nu if method is one of the 5 estimation methods
   if (method %in% valid_methods) {
     est <- switch(method,
                   "Profile" = estimate_nu_profile(y, x, omega_init),
                   "Adj profile" = estimate_nu_adj_profile(y, x, omega_init),
-                  "IJ" = estimate_nu_IJ(y, x, omega_init),
-                  "Marginalized IJ" = estimate_nu_mar_IJ(y, x, omega_init),
-                  "Marginalized Fisher" = estimate_nu_nu_block(y, x, omega_init)
+                  "Full Bayes" = estimate_nu_IJ(y, x, omega_init),
+                  "Pseudo Bayes" = estimate_nu_nu_block(y, x, omega_init)
     )
     omega_hat <- est$omega
     nu_hat <- ifelse(omega_hat > 0, 1 / omega_hat, Inf)
@@ -108,7 +107,7 @@ estimate_beta <- function(y, x,
       nu_hat <- as.numeric(method)
       omega_hat <- ifelse(nu_hat == 0, Inf, 1 / nu_hat)
     } else {
-      stop("Invalid method: must be 'OLS', 'Huber', one of the 5 nu estimation methods, or a non-negative integer.")
+      stop("Invalid method: must be 'OLS', 'Huber', one of the 4 nu estimation methods, or a non-negative integer.")
     }
     success_nu <- NA
   }

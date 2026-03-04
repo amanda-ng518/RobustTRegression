@@ -8,9 +8,8 @@
 #' \itemize{
 #'   \item Profile likelihood
 #'   \item Adjusted profile likelihood
-#'   \item Independent Jeffrey's
-#'   \item Marginalized independent Jeffrey's
-#'   \item Marginalized Fisher
+#'   \item Full Bayes
+#'   \item Pseudo Bayes
 #' }
 #'
 #' This function provides a unified interface to compare these approaches
@@ -26,16 +25,14 @@
 #' \describe{
 #'   \item{profile}{Result from the profile likelihood estimation.}
 #'   \item{adj_profile}{Result from the adjusted profile likelihood approach.}
-#'   \item{IJ}{Result from the independent Jeffrey's approach.}
-#'   \item{mar_IJ}{Result from the marginalized independent Jeffrey's approach.}
-#'   \item{nu_block}{Result from the marginalized Fisher approach.}
+#'   \item{IJ}{Result from the Full Bayes approach.}
+#'   \item{nu_block}{Result from the Pseudo Bayes approach.}
 #' }
 #'
 #' @seealso
 #' \code{\link{estimate_nu_profile}},
 #' \code{\link{estimate_nu_adj_profile}},
 #' \code{\link{estimate_nu_IJ}},
-#' \code{\link{estimate_nu_mar_IJ}},
 #' \code{\link{estimate_nu_nu_block}}
 #'
 #' @export
@@ -43,11 +40,9 @@ run_all_estimators <- function(y, x, omega_init = 1/2) {
   res_profile <- estimate_nu_profile(y, x, omega_init)
   res_adj <- estimate_nu_adj_profile(y, x, omega_init)
   res_IJ <- estimate_nu_IJ(y, x, omega_init)
-  res_mar_IJ <- estimate_nu_mar_IJ(y, x, omega_init)
   res_nu_block <- estimate_nu_nu_block(y, x, omega_init)
   list(profile = res_profile,
        adj_profile = res_adj,
        IJ = res_IJ,
-       mar_IJ = res_mar_IJ,
        nu_block = res_nu_block)
 }

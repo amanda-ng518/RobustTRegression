@@ -130,9 +130,9 @@ estimate_nu_adj_profile <- function(y, x, omega_init = 1/2) {
        convergence = out$convergence, value = out$value)
 }
 
-#' Independent Jeffrey's estimator
+#' Full Bayes estimator
 #'
-#' Computes the Independent Jeffrey's approach estimator for the degrees of freedom
+#' Computes the Full Bayes approach estimator for the degrees of freedom
 #' parameter \eqn{\nu} via optimization over \eqn{\omega = 1 / \nu}.
 #'
 #' @param y Numeric vector. The response variable.
@@ -172,51 +172,9 @@ estimate_nu_IJ <- function(y, x, omega_init = 1/2) {
        convergence = out$convergence, value = out$value)
 }
 
-#' Marginal Independent Jeffrey's
+#' Pseudo Bayes estimator
 #'
-#' Computes the Marginalized Independent Jeffrey's estimator for the degrees of freedom
-#' parameter \eqn{\nu} via optimization over \eqn{\omega = 1 / \nu}.
-#'
-#' @param y Numeric vector. The response variable.
-#' @param x Numeric matrix. The design matrix (should include an intercept column).
-#' @param omega_init Numeric. Initial value for \eqn{\omega = 1 / \nu}.
-#'   If simulated t-error data is used, setting this to the true value of \eqn{1/\nu}
-#'   can improve convergence speed.
-#'
-#' @return A list with the following components:
-#' \describe{
-#'   \item{omega}{The optimized value of \eqn{\omega}.}
-#'   \item{nu}{The corresponding value of \eqn{\nu = 1 / \omega}.}
-#'   \item{convergence}{An integer convergence code from \code{\link[stats]{optim}}.
-#'     A value of 0 indicates successful convergence.}
-#' }
-#' @export
-estimate_nu_mar_IJ <- function(y, x, omega_init = 1/2) {
-  n <- length(y)
-  p <- ncol(x)
-  obj_neg <- function(omega) {
-    if (omega < 0) return(Inf)
-    if (omega == 0) {
-      fit <- fit_profile_mle_fixed_nu(y, x, nu = Inf)
-      joint_logprior <- 0
-      -(fit$loglik + joint_logprior)
-    } else {
-      nu <- 1/omega
-      fit <- fit_profile_mle_fixed_nu(y, x, nu = nu)
-      # Nu Jeffreys prior approximation
-      jj <- (nu/(nu+3))*(trigamma(nu/2)-trigamma(nu/2+1/2)-2*(nu+3)/(nu*(nu+1)^2))
-      if (is.na(jj) || jj <= 0) prior <- 1 else prior <- sqrt(jj)*nu^2
-      -(fit$loglik + log(prior))
-    }
-  }
-  out <- optimize_omega(omega_init, obj_neg)
-  list(omega = out$omega, nu = ifelse(out$omega > 0, 1/out$omega, Inf),
-       convergence = out$convergence, value = out$value)
-}
-
-#' Marginal Fisher estimator
-#'
-#' Computes the Marginalized Fisher estimator for the degrees of freedom
+#' Computes the Pseudo Bayes estimator for the degrees of freedom
 #' parameter \eqn{\nu} via optimization over \eqn{\omega = 1 / \nu}.
 #'
 #' @param y Numeric vector. The response variable.

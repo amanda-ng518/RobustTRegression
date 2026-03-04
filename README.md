@@ -11,9 +11,8 @@ frequentist and bayesian methods, including:
 
 - Profile likelihood
 - Adjusted profile likelihood
-- Independent Jeffrey's 
-- Marginalized Jeffrey's
-- Marginalized Fisher
+- Full Bayes
+- Pseudo Bayes
 
 ## Functions
 
@@ -33,7 +32,6 @@ $\nu$ estimation objective functions:
 - Profile likelihood
 - Adjusted profile likelihood
 - Likelihood with sigma inverse prior, constant $\beta$ prior and $\nu$ Independent Jeffrey's prior
-- Profile likelihood with $\nu$ Jeffrey's prior
 - Profile likelihood with $\nu$ Fisher prior ($\nu$ block in Fisher information)
 
 For each of the 5 $\nu$ estimation approaches, we provide functions to 
@@ -63,9 +61,8 @@ of the following $\nu$-estimation approaches:
 
 - Profile likelihood
 - Adjusted profile likelihood
-- Independent Jeffrey's 
-- Marginalized Jeffrey's 
-- Marginalized Fisher 
+- Full Bayes
+- Pseudo Bayes
 
 Users need to specify the initial value in $\omega$ scale for BFGS optimization.
 By default, it is set as 0.5 (i.e., $\nu = 2$).

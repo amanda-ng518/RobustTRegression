@@ -1,12 +1,12 @@
 Package: RobustTRegression
 Type: Package
 Title: Estimation of Degrees of Freedom and Regression Parameters using Robust t-Regression methods
-Version: 0.0.0.9000
+Version: 1.0.0.000
 Authors@R: 
     person("Amanda", "Ng", email = "waiyuamanda.ng@mail.utoronto.ca", role = c("aut", "cre"))
 Description: Provides several methods for estimating the degrees of freedom parameter (nu)
     and regression coefficients (beta) in robust t-regression models, including profile likelihood,
-    adjusted profile likelihood, Independece Jeffreys prior, and marginalized approaches.
+    adjusted profile likelihood, Full Bayes with Independece Jeffreys prior, and Pseudo Bayes approach.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
