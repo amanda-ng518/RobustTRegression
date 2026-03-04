@@ -42,8 +42,8 @@ To generate synthetic data from a linear regression model with normal errors (sp
 
 The available contamination types in `contam_type` are:
 
-- "N_0_9" : N(0,9) error
-- "t_2" : t(2) error
+- "N_0_9" : $N(0,9)$ error
+- "t_2" : $t(2)$ error
 - "chisq" : $\chi^2(4)$ - 4 error
 - "twopt" : two-point contamination in which any response value may become $-5$ or 5 with a probability $\lambda /2$ each, where $\lambda$ is the contamination probability.
 - `NULL` (and `contam_prob` = 0): ignore contamination specification
