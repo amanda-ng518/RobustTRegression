@@ -42,10 +42,10 @@ To generate synthetic data from a linear regression model with normal errors (sp
 
 The available contamination types in `contam_type` are:
 
-- `"N_0_9"`: N(0,9) error
-- `"t_2"`: t(2) error
-- `"chisq"`: $\chi^2(4)$ - 4 error
-- `"twopt"`: two-point contamination in which any response value may become $-5$ or 5 with a probability $\lambda /2$ each, where $\lambda$ is the contamination probability.
+- "N_0_9" : N(0,9) error
+- "t_2" : t(2) error
+- "chisq" : $\chi^2(4)$ - 4 error
+- "twopt" : two-point contamination in which any response value may become $-5$ or 5 with a probability $\lambda /2$ each, where $\lambda$ is the contamination probability.
 - `NULL` (and `contam_prob` = 0): ignore contamination specification
 
 `contam_prob` should be a number between 0 to 1, controlling for the probability of contamination in the data. Remember to choose a non-null option in `contam_type` if `contam_prob` is set as non-zero. Optionally, you may a random `seed` for reproducibility. By default, `mean = 0, sigma = 1`.
@@ -77,9 +77,9 @@ it is set as 0.5 (i.e., $\nu = 2$).
 
 They output a list of: 
 
-- `omega`: optimal $\omega$
-- `nu`: optimal $\nu$ (essentially 1/ optimal $\omega$)
-- `convergence`: code to check BFGS convergence (0 if success)
+- `omega` : optimal $\omega$
+- `nu` : optimal $\nu$ (essentially 1/ optimal $\omega$)
+- `convergence` : code to check BFGS convergence (0 if success)
   
 Example:
 ```r
@@ -101,22 +101,22 @@ run_all_estimators(y, x, omega_init = 1/2)
 We provide function `estimate_beta()` to first compute a $\nu$ estimator and then proceed to 
 optimize the t-likelihood to obtain $\beta$ estimators. Aside from `x`, `y` and starting point `omega_init`, you will need to specify the `method` to conduct $\nu$ estimation. The available methods include:
 
-- "OLS": $\nu$ will not be estimated
-- "Huber": $\nu$ will not be estimated
+- "OLS" : $\nu$ will not be estimated
+- "Huber" : $\nu$ will not be estimated
 - "Profile"
 - "Adj profile"
 - "Full Bayes"
 - "Pseudo Bayes"
-- any positive integer (interpreted as a fixed nu): $\hat \nu$ will be set as this fixed integer
+- any positive integer (interpreted as a fixed nu) : $\hat \nu$ will be set as this fixed integer
 
 It outputs a list of : 
 
-- `method`: method used to estimate `nu`, same as your input `method`
-- `nu_hat`: optimal $\nu$ (essentially 1/ optimal $\omega$)
-- `beta_hat`: optimal $\beta$
-- `sigma_hat`: optimal $\sigma$
-- `success_nu`: Convergence code for $\nu$-estimation (0 if success)
-- `success_beta`: Convergence code for $\beta$-estimation (0 if success)
+- `method` : method used to estimate `nu`, same as your input `method`
+- `nu_hat` : optimal $\nu$ (essentially 1/ optimal $\omega$)
+- `beta_hat` : optimal $\beta$
+- `sigma_hat` : optimal $\sigma$
+- `success_nu` : Convergence code for $\nu$-estimation (0 if success)
+- `success_beta` : Convergence code for $\beta$-estimation (0 if success)
 
 Example:
 ```r
