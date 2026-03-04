@@ -100,7 +100,7 @@ Example:
 [1] 0
 ```
 
-We also provide a function to conduct estimations on all 4 approaches at once. Similarly, users need to specify `x`, `y`, and the initial value in $\omega$ scale for BFGS optimization. It outputs a list of 4 sub-lists, each sub-list containing the results from a single estimation method.
+We also provide a function to conduct estimations on all 4 approaches at once. Similarly, users need to specify `x`, `y`, and the initial value in $\omega$ scale for BFGS optimization. It outputs a list of 4 sub-lists (`profile`, `adj_profile`, `IJ`, `nu_block`), each sub-list containing the results from a single estimation method (corresponding to profile, adjusted profile, full bayes, and pseudo bayes).
 
 Example:
 ```r
