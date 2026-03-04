@@ -46,7 +46,7 @@ The available contamination types in `contam_type` are:
 - "t_2" : $t(2)$ error
 - "chisq" : $\chi^2(4)$ - 4 error
 - "twopt" : two-point contamination in which any response value may become $-5$ or 5 with a probability $\lambda /2$ each, where $\lambda$ is the contamination probability.
-- `NULL` (and `contam_prob` = 0): ignore contamination specification
+- `NULL` (also set `contam_prob` = 0): ignore contamination specification
 
 `contam_prob` should be a number between 0 to 1, controlling for the probability of contamination in the data. Remember to choose a non-null option in `contam_type` if `contam_prob` is set as non-zero. Optionally, you may a random `seed` for reproducibility. By default, `mean = 0, sigma = 1`.
 
