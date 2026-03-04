@@ -28,7 +28,7 @@ x <- sim_t_data$x
 y <- sim_t_data$y
 ```
 
-To generate synthetic data from a linear regression model where the error terms follow a normal distribution with a specified mean (`mean`) and standard error (`sigma`), use `simulate_n_error_data()`. Covariates x are generated from standard normal distribution. Optionally, you may a random `seed` for reproducibility. By default, `mean = 0, sigma = 1`.
+To generate synthetic data from a linear regression model where the error terms follow a normal distribution with a specified mean (`mean`) and standard error (`sigma`), use `simulate_n_error_data()`. Covariates x are generated from standard normal distribution. Optionally, you may set a random `seed` for reproducibility. By default, `mean = 0, sigma = 1`.
 
 Example:
 ```r
@@ -48,7 +48,7 @@ The available contamination types in `contam_type` are:
 - "twopt" : two-point contamination in which any response value may become $-5$ or 5 with a probability $\lambda /2$ each, where $\lambda$ is the contamination probability.
 - `NULL` (also set `contam_prob` = 0): ignore contamination specification
 
-`contam_prob` should be a number between 0 to 1, controlling for the probability of contamination in the data. Remember to choose a non-null option in `contam_type` if `contam_prob` is set as non-zero. Optionally, you may a random `seed` for reproducibility. By default, `mean = 0, sigma = 1`.
+`contam_prob` should be a number between 0 to 1, controlling for the probability of contamination in the data. Remember to choose a non-null option in `contam_type` if `contam_prob` is set as non-zero. Optionally, you may a set random `seed` for reproducibility. By default, `mean = 0, sigma = 1`.
 
 Example:
 ```r
