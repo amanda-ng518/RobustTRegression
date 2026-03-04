@@ -63,7 +63,7 @@ simulate_t_error_data <- function(n = 300, p = 1, beta = rep(0,1), sigma = 1, nu
 #' The first element corresponds to the intercept.
 #' @param mean Numeric. Mean parameter for the normal errors. Default is 0.
 #' @param sigma Numeric. Scale parameter for the normal errors. Default is 1.
-#' @param seed Optional integer. Random seed for reproducibility.
+#' @param seed Optional integer. Set random seed for reproducibility.
 #'
 #' @return A list with the following components:
 #' \describe{

@@ -25,7 +25,7 @@ The first element corresponds to the intercept.}
 
 \item{sigma}{Numeric. Scale parameter for the normal errors. Default is 1.}
 
-\item{seed}{Optional integer. Random seed for reproducibility.}
+\item{seed}{Optional integer. Set random seed for reproducibility.}
 }
 \value{
 A list with the following components:
