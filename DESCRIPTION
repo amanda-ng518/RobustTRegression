@@ -10,7 +10,7 @@ Description: Provides several methods for estimating the degrees of freedom para
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Imports:
     MASS,
     stats

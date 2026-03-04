@@ -1,7 +1,7 @@
 #' Run All \eqn{\nu} Estimation Methods on a Single Simulated Dataset
 #'
 #' @description
-#' Applies five different methods for estimating the degrees of freedom parameter
+#' Applies four different methods for estimating the degrees of freedom parameter
 #' \eqn{\nu} in a Student-\emph{t} regression model to a single simulated dataset.
 #' Each method represents a distinct estimation strategy based on:
 #'

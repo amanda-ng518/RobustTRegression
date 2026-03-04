@@ -2,7 +2,7 @@
 % Please edit documentation in R/nu_estimator.R
 \name{estimate_nu_nu_block}
 \alias{estimate_nu_nu_block}
-\title{Marginal Fisher estimator}
+\title{Pseudo Bayes estimator}
 \usage{
 estimate_nu_nu_block(y, x, omega_init = 1/2)
 }
@@ -25,6 +25,6 @@ A value of 0 indicates successful convergence.}
 }
 }
 \description{
-Computes the Marginalized Fisher estimator for the degrees of freedom
+Computes the Pseudo Bayes estimator for the degrees of freedom
 parameter \eqn{\nu} via optimization over \eqn{\omega = 1 / \nu}.
 }

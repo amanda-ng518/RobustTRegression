@@ -1,3 +1,7 @@
+# ============================================================
+# Helper functions for Profile MLE and MAP (fixed nu)
+# ============================================================
+
 #' Profile MLE of \code{sigma} and \code{beta} for Fixed Degrees of Freedom
 #'
 #' This internal helper function computes the profile maximum likelihood estimates (MLEs)

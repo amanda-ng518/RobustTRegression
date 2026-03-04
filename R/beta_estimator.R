@@ -1,3 +1,7 @@
+# ============================================================
+# Beta estimation function
+# ============================================================
+
 #' Estimate Regression Coefficients \eqn{\beta} Using Various Methods
 #'
 #' This function estimates regression coefficients (\eqn{\beta}) and the scale

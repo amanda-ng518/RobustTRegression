@@ -2,7 +2,7 @@
 % Please edit documentation in R/nu_estimator.R
 \name{estimate_nu_IJ}
 \alias{estimate_nu_IJ}
-\title{Independent Jeffrey's estimator}
+\title{Full Bayes estimator}
 \usage{
 estimate_nu_IJ(y, x, omega_init = 1/2)
 }
@@ -25,6 +25,6 @@ A value of 0 indicates successful convergence.}
 }
 }
 \description{
-Computes the Independent Jeffrey's approach estimator for the degrees of freedom
+Computes the Full Bayes approach estimator for the degrees of freedom
 parameter \eqn{\nu} via optimization over \eqn{\omega = 1 / \nu}.
 }

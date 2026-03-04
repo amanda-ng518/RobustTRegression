@@ -7,8 +7,7 @@
 estimate_beta(
   y,
   x,
-  method = c("OLS", "Huber", "Profile", "Adj profile", "IJ", "Marginalized IJ",
-    "Marginalized Fisher"),
+  method = c("OLS", "Huber", "Profile", "Adj profile", "Full Bayes", "Pseudo Bayes"),
   omega_init = 0.5,
   beta_init = NULL,
   sigma_init = NULL,
@@ -21,8 +20,8 @@ estimate_beta(
 \item{x}{Numeric matrix. The design matrix (must include an intercept column).}
 
 \item{method}{Character or numeric. Specifies the estimation method:
-one of \code{"OLS"}, \code{"Huber"}, \code{"profile"}, \code{"adj_profile"},
-\code{"IJ"}, \code{"Marginalized IJ"}, \code{"Marginalized Fisher"},
+one of \code{"OLS"}, \code{"Huber"}, \code{"Profile"}, \code{"Adj profile"},
+\code{"Full Bayes"}, \code{"Pseudo Bayes"},
 or a positive integer (interpreted as a fixed \code{nu}).}
 
 \item{omega_init}{Numeric. Initial value for the \code{omega = 1/nu} parameter (default is 0.5).}
@@ -57,7 +56,7 @@ parameter (\eqn{\sigma}) using one of several estimation approaches:
 \item Huber Regression (robust): \code{"Huber"}
 \item Fixed degrees of freedom Student-\emph{t} regression: a non-negative integer \code{nu}
 \item Estimated degrees of freedom using one of the following:
-\code{"profile"}, \code{"adj_profile"}, \code{"IJ"}, \code{"Marginalized IJ"}, \code{"Marginalized Fisher"}
+\code{"Profile"}, \code{"Adj profile"}, \code{"Full Bayes"}, \code{"Pseudo Bayes"}
 }
 
 Internally, this function dispatches to the appropriate estimation routine based on the specified method.
