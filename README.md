@@ -16,7 +16,7 @@ frequentist and bayesian methods, including:
 
 ## Functions
 
-### Simulate data
+### Data simulations
 
 To generate synthetic data from a linear regression model where the error terms follow a Student's t-distribution with a specified degrees of freedom (`nu`), use `simulate_t_error_data()`. Covariates x are generated from standard normal distribution. Optionally, you may a random `seed` for reproducibility. By default, `sigma = 1, nu = 2`. 
 
@@ -60,7 +60,7 @@ x <- contam_sim_data$x
 y <- contam_sim_data$y
 ```
 
-### Estimate $\nu$
+### $\nu$-estimation
 
 $\nu$ estimation objective functions:
 
@@ -96,7 +96,7 @@ Example:
 run_all_estimators(y, x, omega_init = 1/2)
 ```
 
-### Estimate $\beta$
+### $\beta$-estimation
 
 We provide function `estimate_beta()` to first compute a $\nu$ estimator and then proceed to 
 optimize the t-likelihood to obtain $\beta$ estimators. Aside from `x`, `y` and starting point `omega_init`, you will need to specify the `method` to conduct $\nu$ estimation. The available methods include:
