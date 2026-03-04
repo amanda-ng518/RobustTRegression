@@ -89,9 +89,10 @@ They output a list of:
 - `nu` : optimal $\nu$ (essentially 1/ optimal $\omega$)
 - `convergence` : code to check BFGS convergence (0 if success)
   
-Example (using data in `contam_sim_data` generated above):
+Example:
 ```r
 # Estimate nu with profile likelihood approach
+# Using data in `contam_sim_data` generated above
 > nu_estimation <- estimate_nu_profile(y, x, omega_init = 1/2)
 > nu_estimation$nu # Optimal nu
 [1] 0.09564679
@@ -101,8 +102,9 @@ Example (using data in `contam_sim_data` generated above):
 
 We also provide a function to conduct estimations on all 4 approaches at once. Similarly, users need to specify `x`, `y`, and the initial value in $\omega$ scale for BFGS optimization. It outputs a list of 4 sub-lists, each sub-list containing the results from a single estimation method.
 
-Example (using data in `contam_sim_data` generated above):
+Example:
 ```r
+# Using data in `contam_sim_data` generated above
 > run_all_estimators(y, x, omega_init = 1/2)
 $profile
 $profile$omega
@@ -182,9 +184,10 @@ It outputs a list of :
 - `success_nu` : Convergence code for $\nu$-estimation (0 if success)
 - `success_beta` : Convergence code for $\beta$-estimation (0 if success)
 
-Example (using data in `contam_sim_data` generated above):
+Example:
 ```r
 # Estimate beta with adjusted profile likelihood approach
+# Using data in `contam_sim_data` generated above
 > beta_estimation <- estimate_beta(y, x, method = "Adj profile", omega_init = 0.5) # By default we use OLS estimates as initial guess for beta and sigma
 > beta_estimation$beta_hat # Optimal beta
         x1         x2         x3         x4         x5 
