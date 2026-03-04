@@ -22,18 +22,26 @@ To generate synthetic data from a linear regression model where the error terms 
 
 Example:
 ```r
-# Simulate a set of data with 20 rows, 5 columns with true beta all set as 0 and t(2) error
-sim_t_data <- simulate_t_error_data(n = 20, p = 5, beta = rep(0,5), sigma = 1, nu = 2, seed = 123)
-x <- sim_t_data$x
-y <- sim_t_data$y
+# Simulate a set of data with 4 rows, 5 columns with true beta all set as 0 and t(2) error
+> sim_t_data <- simulate_t_error_data(n = 4, p = 5, beta = rep(0,5), sigma = 1, nu = 2, seed = 123)
+
+> sim_t_data$x
+     [,1]        [,2]       [,3]       [,4]       [,5]
+[1,]    1 -0.56047565  0.1292877 -0.6868529  0.4007715
+[2,]    1 -0.23017749  1.7150650 -0.4456620  0.1106827
+[3,]    1  1.55870831  0.4609162  1.2240818 -0.5558411
+[4,]    1  0.07050839 -1.2650612  0.3598138  1.7869131
+
+> sim_t_data$y
+[1]  0.9913147 -2.0389531 -1.0818755  0.7809687
 ```
 
 To generate synthetic data from a linear regression model where the error terms follow a normal distribution with a specified mean (`mean`) and standard error (`sigma`), use `simulate_n_error_data()`. Covariates x are generated from standard normal distribution. Optionally, you may set a random `seed` for reproducibility. By default, `mean = 0, sigma = 1`.
 
 Example:
 ```r
-# Simulate a set of data with 20 rows, 5 columns with true beta all set as 0 and standard normal error
-sim_n_data <- simulate_n_error_data(n = 20, p = 5, beta = rep(0,5), mean = 0, sigma = 1, seed = 123)
+# Simulate a set of data with 4 rows, 5 columns with true beta all set as 0 and standard normal error
+sim_n_data <- simulate_n_error_data(n = 4, p = 5, beta = rep(0,5), mean = 0, sigma = 1, seed = 123)
 x <- sim_n_data$x
 y <- sim_n_data$y
 ```
@@ -54,7 +62,7 @@ Example:
 ```r
 # Simulate a set of data with 20 rows, 5 columns with true beta all set as 0 and t(2) error
 contam_sim_data <- simulate_contaminated_data(n = 20, p = 5, beta = rep(0, 5), mean = 0,
-                                       sigma = 1, contam_type = "twopt", NULL, contam_prob = 0.2,
+                                       sigma = 1, contam_type = "twopt", contam_prob = 0.2,
                                        seed = NULL)
 x <- contam_sim_data$x
 y <- contam_sim_data$y
@@ -81,19 +89,75 @@ They output a list of:
 - `nu` : optimal $\nu$ (essentially 1/ optimal $\omega$)
 - `convergence` : code to check BFGS convergence (0 if success)
   
-Example:
+Example (using data in `contam_sim_data` generated above):
 ```r
 # Estimate nu with profile likelihood approach
-nu_estimation <- estimate_nu_profile(y, x, omega_init = 1/2)
-est_nu <- nu_estimation$nu # Optimal nu
-nu_estimation$convergence # Check convergence = 0 (if success)
+> nu_estimation <- estimate_nu_profile(y, x, omega_init = 1/2)
+> nu_estimation$nu # Optimal nu
+[1] 0.09564679
+> nu_estimation$convergence # Check convergence = 0 (if success)
+[1] 0
 ```
 
 We also provide a function to conduct estimations on all 4 approaches at once. Similarly, users need to specify `x`, `y`, and the initial value in $\omega$ scale for BFGS optimization. It outputs a list of 4 sub-lists, each sub-list containing the results from a single estimation method.
 
-Example:
+Example (using data in `contam_sim_data` generated above):
 ```r
-run_all_estimators(y, x, omega_init = 1/2)
+> run_all_estimators(y, x, omega_init = 1/2)
+$profile
+$profile$omega
+[1] 10.45513
+
+$profile$nu
+[1] 0.09564679
+
+$profile$convergence
+[1] 0
+
+$profile$value
+[1] 23.6452
+
+
+$adj_profile
+$adj_profile$omega
+[1] 0.3671563
+
+$adj_profile$nu
+[1] 2.723636
+
+$adj_profile$convergence
+[1] 0
+
+$adj_profile$value
+[1] 45.63194
+
+
+$IJ
+$IJ$omega
+[1] 7.328403
+
+$IJ$nu
+[1] 0.1364554
+
+$IJ$convergence
+[1] 0
+
+$IJ$value
+[1] 19.50565
+
+
+$nu_block
+$nu_block$omega
+[1] 5.893818
+
+$nu_block$nu
+[1] 0.1696693
+
+$nu_block$convergence
+[1] 0
+
+$nu_block$value
+[1] 26.62771
 ```
 
 ### $\beta$-estimation
@@ -118,15 +182,18 @@ It outputs a list of :
 - `success_nu` : Convergence code for $\nu$-estimation (0 if success)
 - `success_beta` : Convergence code for $\beta$-estimation (0 if success)
 
-Example:
+Example (using data in `contam_sim_data` generated above):
 ```r
 # Estimate beta with adjusted profile likelihood approach
-beta_estimation <- estimate_beta(y, x, method = "Adj profile", omega_init = 0.5) # By default we use OLS estimates as initial guess for beta and sigma
-est_beta <- beta_estimation$beta_hat # Optimal beta
-nu_hat <- beta_estimation$nu_hat # Optimal nu
-beta_estimation$success_beta # Check convergence = 0 (if success)
+> beta_estimation <- estimate_beta(y, x, method = "Adj profile", omega_init = 0.5) # By default we use OLS estimates as initial guess for beta and sigma
+> beta_estimation$beta_hat # Optimal beta
+        x1         x2         x3         x4         x5 
+-0.6259516  0.2629523  0.1611002  0.3068136 -0.7479364
+> beta_estimation$nu_hat # Optimal nu
+[1] 2.723636
+> beta_estimation$success_beta # Check convergence = 0 (if success)
+[1] 0
 ```
-
 
 ## Installation
 
