@@ -61,7 +61,7 @@ simulate_t_error_data <- function(n = 300, p = 1, beta = rep(0,1), sigma = 1, nu
 #' @param p Integer. Number of predictors (including the intercept). Default is 1.
 #' @param beta Numeric vector of regression coefficients of length \code{p}.
 #' The first element corresponds to the intercept.
-#' @param mu Numeric. Mean parameter for the normal errors. Default is 0.
+#' @param mean Numeric. Mean parameter for the normal errors. Default is 0.
 #' @param sigma Numeric. Scale parameter for the normal errors. Default is 1.
 #' @param seed Optional integer. Random seed for reproducibility.
 #'
@@ -86,7 +86,7 @@ simulate_n_error_data <- function(n = 300, p = 1, beta = rep(0,1), mean = 0, sig
   if (ncov > 0) for (i in 1:ncov) x[,i] <- rnorm(n)
   x <- cbind(1, x)
   mu <- x %*% beta
-  errors <- rnorm(n = n, mean = 0, sd = sigma)
+  errors <- rnorm(n = n, mean = mean, sd = sigma)
   y <- as.numeric(mu + errors)
   list(y = y, x = x)
 }
@@ -105,7 +105,7 @@ simulate_n_error_data <- function(n = 300, p = 1, beta = rep(0,1), mean = 0, sig
 #' @param p Integer. Number of predictors (including the intercept). Default is 1.
 #' @param beta Numeric vector of regression coefficients of length \code{p}.
 #' The first element corresponds to the intercept.
-#' @param mu Numeric. Mean parameter for the normal errors. Default is 0.
+#' @param mean Numeric. Mean parameter for the normal errors. Default is 0.
 #' @param sigma Numeric. Scale parameter for the normal errors. Default is 1.
 #' @param contam_type Character. Type of contaminated error. Default is NULL.
 #' Available options include: "N_0_9", "t_2", "chisq", "twopt".
@@ -150,22 +150,22 @@ simulate_contaminated_data <- function(n = 300, p = 1, beta = rep(0, 1), mean = 
   # Contamination types
   # No contamination
   if (is.null(contam_type)){
-    errors <- rnorm(n, mean = 0, sd = sigma)
+    errors <- rnorm(n, mean = mean, sd = sigma)
   }
   # N(0,9)
   else if (contam_type == "N_0_9") {
     errors[1:m] <- rnorm(m, mean = 0, sd = 3)
-    errors[(m+1):n] <- rnorm(n - m, mean = 0, sd = sigma)
+    errors[(m+1):n] <- rnorm(n - m, mean = mean, sd = sigma)
 
   # t(2)
   } else if (contam_type == "t_2") {
     errors[1:m] <- sigma * rt(m, df = 2)
-    errors[(m+1):n] <- rnorm(n - m, mean = 0, sd = sigma)
+    errors[(m+1):n] <- rnorm(n - m, mean = mean, sd = sigma)
 
   # chisq(4) - 4
   } else if (contam_type == "chisq") {
     errors[1:m] <- rchisq(m, df = 4) - 4
-    errors[(m+1):n] <- rnorm(n - m, mean = 0, sd = sigma)
+    errors[(m+1):n] <- rnorm(n - m, mean = mean, sd = sigma)
 
   # two-point contamination
   } else if (contam_type == "twopt") {
@@ -173,7 +173,7 @@ simulate_contaminated_data <- function(n = 300, p = 1, beta = rep(0, 1), mean = 
     y <- mu
     y[1:half] <- 5
     y[(half+1):m] <- -5
-    y[(m+1):n] <- mu[(m+1):n] + rnorm(n - m, mean = 0, sd = sigma)
+    y[(m+1):n] <- mu[(m+1):n] + rnorm(n - m, mean = mean, sd = sigma)
     return(list(y = y, x = x))
 
   } else {

@@ -23,6 +23,8 @@ simulate_contaminated_data(
 \item{beta}{Numeric vector of regression coefficients of length \code{p}.
 The first element corresponds to the intercept.}
 
+\item{mean}{Numeric. Mean parameter for the normal errors. Default is 0.}
+
 \item{sigma}{Numeric. Scale parameter for the normal errors. Default is 1.}
 
 \item{contam_type}{Character. Type of contaminated error. Default is NULL.
@@ -31,8 +33,6 @@ Available options include: "N_0_9", "t_2", "chisq", "twopt".}
 \item{contam_prob}{Numeric. Proportion of data with contaminated error. Default is 0.}
 
 \item{seed}{Optional integer. Random seed for reproducibility.}
-
-\item{mu}{Numeric. Mean parameter for the normal errors. Default is 0.}
 }
 \value{
 A list with the following components:
