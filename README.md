@@ -45,7 +45,7 @@ Example:
 estimate_nu_profile(y, x, omega_init = 1/2)
 ```
 
-We also provide a function to conduct estimations on all 5 approaches all at once.
+We also provide a function to conduct estimations on all 4 approaches at once.
 Users need to specify the initial value in $\omega$ scale for BFGS optimization.
 
 Example:
