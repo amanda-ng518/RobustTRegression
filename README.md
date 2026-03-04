@@ -17,13 +17,47 @@ frequentist and bayesian methods, including:
 ## Functions
 
 ### Simulate data
-We provide 
-Generate synthetic data from a linear regression model where the error terms
-follow a Student's t-distribution with a specified degrees of freedom.
+
+To generate synthetic data from a linear regression model where the error terms follow a Student's t-distribution with a specified degrees of freedom (`nu`), use `simulate_t_error_data()`. Covariates x are generated from standard normal distribution. Optionally, you may a random `seed` for reproducibility. By default, `sigma = 1, nu = 2`. 
 
 Example:
 ```r
-simulate_t_error_data(n = 300, p = 1, beta = rep(0,1), sigma = 1, nu = 2, seed = NULL)
+# Simulate a set of data with 20 rows, 5 columns with true beta all set as 0 and t(2) error
+sim_t_data <- simulate_t_error_data(n = 20, p = 5, beta = rep(0,5), sigma = 1, nu = 2, seed = 123)
+x <- sim_t_data$x
+y <- sim_t_data$y
+```
+
+To generate synthetic data from a linear regression model where the error terms follow a normal distribution with a specified mean (`mean`) and standard error (`sigma`), use `simulate_n_error_data()`. Covariates x are generated from standard normal distribution. Optionally, you may a random `seed` for reproducibility. By default, `mean = 0, sigma = 1`.
+
+Example:
+```r
+# Simulate a set of data with 20 rows, 5 columns with true beta all set as 0 and standard normal error
+sim_n_data <- simulate_n_error_data(n = 20, p = 5, beta = rep(0,5), mean = 0, sigma = 1, seed = 123)
+x <- sim_n_data$x
+y <- sim_n_data$y
+```
+
+To generate synthetic data from a linear regression model with normal errors (specify `mean` and `sigma`) and contamination, use `simulate_contaminated_data()`. Covariates x are generated from standard normal distribution. The contamination is controlled by `contam_type` and `contam_prob`. 
+
+The available contamination types in `contam_type` are:
+
+- "N_0_9": N(0,9) error
+- "t_2": t(2) error
+- "chisq": $\chi^2(4)$ - 4 error
+- "twopt": two-point contamination in which any response value may become $-5$ or 5 with a probability $\lambda /2$ each, where $\lambda$ is the contamination probability.
+- `NULL` (and `contam_prob` = 0): ignore contamination specification
+
+`contam_prob` should be a number between 0 to 1, controlling for the probability of contamination in the data. Remember to choose a non-null option in `contam_type` if `contam_prob` is set as non-zero. Optionally, you may a random `seed` for reproducibility. By default, `mean = 0, sigma = 1`.
+
+Example:
+```r
+# Simulate a set of data with 20 rows, 5 columns with true beta all set as 0 and t(2) error
+contam_sim_data <- simulate_contaminated_data(n = 20, p = 5, beta = rep(0, 5), mean = 0,
+                                       sigma = 1, contam_type = "twopt", NULL, contam_prob = 0.2,
+                                       seed = NULL)
+x <- contam_sim_data$x
+y <- contam_sim_data$y
 ```
 
 ### Estimate $\nu$
