@@ -18,7 +18,7 @@ frequentist and bayesian methods, including:
 
 ### Data simulations
 
-To generate synthetic data from a linear regression model where the error terms follow a Student's t-distribution with a specified degrees of freedom (`nu`), use `simulate_t_error_data()`. Covariates x are generated from standard normal distribution. Optionally, you may a random `seed` for reproducibility. By default, `sigma = 1, nu = 2`. 
+To generate synthetic data from a linear regression model where the error terms follow a Student's t-distribution with a specified degrees of freedom (`nu`), use `simulate_t_error_data()`. Covariates x are generated from standard normal distribution. Optionally, you may set a random `seed` for reproducibility. By default, `sigma = 1, nu = 2`. 
 
 Example:
 ```r
