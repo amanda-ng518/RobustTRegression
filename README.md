@@ -22,6 +22,9 @@ To generate synthetic data from a linear regression model where the error terms 
 
 Example:
 ```r
+# Load library
+> library(RobustTRegression)
+
 # Simulate a set of data with 4 rows, 5 columns with true beta all set as 0 and t(2) error
 > sim_t_data <- simulate_t_error_data(n = 4, p = 5, beta = rep(0,5), sigma = 1, nu = 2, seed = 123)
 
@@ -210,4 +213,7 @@ if (!requireNamespace("remotes", quietly = TRUE)) {
 
 # Install RobustTRegression from GitHub
 remotes::install_github("amanda-ng518/RobustTRegression")
+
+# Load library
+library(RobustTRegression)
 ```
