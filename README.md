@@ -79,7 +79,7 @@ $\nu$ estimation objective functions:
 
 For each of the 4 $\nu$ estimation approaches, we provide functions to 
 compute the 4 objective functions estimator for the degrees of freedom
-parameter $\eqn{\nu}$ via optimization over $\eqn{\omega = 1 / \nu}$. Users need to
+parameter $\nu$ via optimization over $\omega = 1 / \nu$. Users need to
 specify `x`, `y`, and the initial value in $\omega$ scale for BFGS optimization. By default, 
 it is set as 0.5 (i.e., $\nu = 2$).
 
