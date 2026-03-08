@@ -63,7 +63,7 @@ Example:
 # Simulate a set of data with 20 rows, 5 columns with true beta all set as 0 and t(2) error
 contam_sim_data <- simulate_contaminated_data(n = 20, p = 5, beta = rep(0, 5), mean = 0,
                                        sigma = 1, contam_type = "twopt", contam_prob = 0.2,
-                                       seed = NULL)
+                                       seed = 123)
 x <- contam_sim_data$x
 y <- contam_sim_data$y
 ```
@@ -95,7 +95,7 @@ Example:
 # Using data in `contam_sim_data` generated above
 > nu_estimation <- estimate_nu_profile(y, x, omega_init = 1/2)
 > nu_estimation$nu # Optimal nu
-[1] 0.09564679
+[1] 0.1102719
 > nu_estimation$convergence # Check convergence = 0 (if success)
 [1] 0
 ```
@@ -108,58 +108,58 @@ Example:
 > run_all_estimators(y, x, omega_init = 1/2)
 $profile
 $profile$omega
-[1] 10.45513
+[1] 9.068491
 
 $profile$nu
-[1] 0.09564679
+[1] 0.1102719
 
 $profile$convergence
 [1] 0
 
 $profile$value
-[1] 23.6452
+[1] 26.64138
 
 
 $adj_profile
 $adj_profile$omega
-[1] 0.3671563
+[1] 0.7149223
 
 $adj_profile$nu
-[1] 2.723636
+[1] 1.398753
 
 $adj_profile$convergence
 [1] 0
 
 $adj_profile$value
-[1] 45.63194
+[1] 48.60885
 
 
 $IJ
 $IJ$omega
-[1] 7.328403
+[1] 7.822529
 
 $IJ$nu
-[1] 0.1364554
+[1] 0.1278359
 
 $IJ$convergence
 [1] 0
 
 $IJ$value
-[1] 19.50565
+[1] 16.26669
 
 
 $nu_block
 $nu_block$omega
-[1] 5.893818
+[1] 9.292356
 
 $nu_block$nu
-[1] 0.1696693
+[1] 0.1076153
 
 $nu_block$convergence
 [1] 0
 
 $nu_block$value
-[1] 26.62771
+[1] 28.35427
 ```
 
 ### $\beta$-estimation
@@ -190,10 +190,10 @@ Example:
 # Using data in `contam_sim_data` generated above
 > beta_estimation <- estimate_beta(y, x, method = "Adj profile", omega_init = 0.5) # By default we use OLS estimates as initial guess for beta and sigma
 > beta_estimation$beta_hat # Optimal beta
-        x1         x2         x3         x4         x5 
--0.6259516  0.2629523  0.1611002  0.3068136 -0.7479364
+         x1          x2          x3          x4          x5 
+ 0.24335350  0.23649201  0.23051357 -0.03220889 -0.09397384 
 > beta_estimation$nu_hat # Optimal nu
-[1] 2.723636
+[1] 1.398753
 > beta_estimation$success_beta # Check convergence = 0 (if success)
 [1] 0
 ```
