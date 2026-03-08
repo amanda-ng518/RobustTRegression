@@ -1,6 +1,6 @@
 # RobustTRegression
 
-**RobustTRegression** is an R package for performing robust regression using the t-distribution. It provides tools to fit regression models that are resistant to outliers and heavy-tailed errors, improving the reliability of parameter estimates in such scenarios. For a more complete demonstration to reproduce the numerical results in our paper, please refer to [Aspect of Robust Regression Analysis full repo](https://github.com/amanda-ng518/Aspects-of-Robust-Regression-Analysis).
+**RobustTRegression** is an R package for performing robust regression using the t-distribution. It provides tools to fit regression models that are resistant to outliers and heavy-tailed errors, improving the reliability of parameter estimates in such scenarios. For a more complete demonstration to reproduce the numerical results in our paper, please refer to our full GitHub repo: [Aspect of Robust Regression Analysis](https://github.com/amanda-ng518/Aspects-of-Robust-Regression-Analysis).
 
 ## Overview
 
